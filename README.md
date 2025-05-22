@@ -1,0 +1,1 @@
+# go-ogen-crud-example
