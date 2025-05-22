@@ -1,0 +1,144 @@
+openapi: 3.0.3
+info:
+  title: Car API
+  version: 1.0.0
+  description: API for managing cars.
+
+paths:
+  /cars:
+    get:
+      summary: List all cars
+      description: Get a list of all cars currently stored.
+      operationId: listCars
+      responses:
+        '200':
+          description: A list of cars.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Car'
+    post:
+      summary: Create a new car
+      description: Add a new car to the storage.
+      operationId: addCar
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewCar'
+      responses:
+        '201':
+          description: New car was successfully created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Car'
+
+  /cars/{id}:
+    get:
+      summary: Get a car by ID
+      description: Get a car using its ID.
+      operationId: getCarById
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Requested car.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Car'
+        '404':
+          description: Car not found.
+    put:
+      summary: Update a car by ID
+      description: Modify an existing car's details using its ID.
+      operationId: updateCarById
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Car'
+      responses:
+        '200':
+          description: Updated car.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Car'
+        '404':
+          description: Car not found.
+    delete:
+      summary: Delete a car by ID
+      description: Remove a car from storage using its ID.
+      operationId: deleteCarById
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Car deleted successfully.
+        '404':
+          description: Car not found.
+
+components:
+  schemas:
+    Car:
+      type: object
+      required:
+        - id
+        - manufacturer
+        - model
+        - year
+        - color
+      properties:
+        id:
+          type: integer
+          format: int
+          example: 1
+        manufacturer:
+          type: string
+          example: BMW
+        model:
+          type: string
+          example: X5
+        year:
+          type: integer
+          example: 2025
+        color:
+          type: string
+          example: Black
+    NewCar:
+      type: object
+      required:
+        - manufacturer
+        - model
+        - year
+        - color
+      properties:
+        manufacturer:
+          type: string
+        model:
+          type: string
+        year:
+          type: integer
+        color:
+          type: string
+
