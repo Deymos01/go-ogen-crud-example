@@ -3,6 +3,9 @@ info:
   title: Car API
   version: 1.0.0
   description: API for managing cars.
+servers:
+  - url: http://localhost:8080
+    description: Local server
 
 paths:
   /cars:
@@ -76,7 +79,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Car'
+              $ref: '#/components/schemas/NewCar'
       responses:
         '200':
           description: Updated car.
