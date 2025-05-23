@@ -33,9 +33,16 @@ func encodeDeleteCarByIdResponse(response DeleteCarByIdRes, w http.ResponseWrite
 
 		return nil
 
-	case *DeleteCarByIdNotFound:
+	case *Error:
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(404)
 		span.SetStatus(codes.Error, http.StatusText(404))
+
+		e := new(jx.Encoder)
+		response.Encode(e)
+		if _, err := e.WriteTo(w); err != nil {
+			return errors.Wrap(err, "write")
+		}
 
 		return nil
 
@@ -59,9 +66,16 @@ func encodeGetCarByIdResponse(response GetCarByIdRes, w http.ResponseWriter, spa
 
 		return nil
 
-	case *GetCarByIdNotFound:
+	case *Error:
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(404)
 		span.SetStatus(codes.Error, http.StatusText(404))
+
+		e := new(jx.Encoder)
+		response.Encode(e)
+		if _, err := e.WriteTo(w); err != nil {
+			return errors.Wrap(err, "write")
+		}
 
 		return nil
 
@@ -103,9 +117,16 @@ func encodeUpdateCarByIdResponse(response UpdateCarByIdRes, w http.ResponseWrite
 
 		return nil
 
-	case *UpdateCarByIdNotFound:
+	case *Error:
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(404)
 		span.SetStatus(codes.Error, http.StatusText(404))
+
+		e := new(jx.Encoder)
+		response.Encode(e)
+		if _, err := e.WriteTo(w); err != nil {
+			return errors.Wrap(err, "write")
+		}
 
 		return nil
 

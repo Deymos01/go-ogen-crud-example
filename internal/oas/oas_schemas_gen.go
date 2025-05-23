@@ -69,15 +69,36 @@ type DeleteCarByIdNoContent struct{}
 
 func (*DeleteCarByIdNoContent) deleteCarByIdRes() {}
 
-// DeleteCarByIdNotFound is response for DeleteCarById operation.
-type DeleteCarByIdNotFound struct{}
+// Represents error object.
+// Ref: #/components/schemas/Error
+type Error struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+}
 
-func (*DeleteCarByIdNotFound) deleteCarByIdRes() {}
+// GetCode returns the value of Code.
+func (s *Error) GetCode() int64 {
+	return s.Code
+}
 
-// GetCarByIdNotFound is response for GetCarById operation.
-type GetCarByIdNotFound struct{}
+// GetMessage returns the value of Message.
+func (s *Error) GetMessage() string {
+	return s.Message
+}
 
-func (*GetCarByIdNotFound) getCarByIdRes() {}
+// SetCode sets the value of Code.
+func (s *Error) SetCode(val int64) {
+	s.Code = val
+}
+
+// SetMessage sets the value of Message.
+func (s *Error) SetMessage(val string) {
+	s.Message = val
+}
+
+func (*Error) deleteCarByIdRes() {}
+func (*Error) getCarByIdRes()    {}
+func (*Error) updateCarByIdRes() {}
 
 // Ref: #/components/schemas/NewCar
 type NewCar struct {
@@ -126,8 +147,3 @@ func (s *NewCar) SetYear(val int) {
 func (s *NewCar) SetColor(val string) {
 	s.Color = val
 }
-
-// UpdateCarByIdNotFound is response for UpdateCarById operation.
-type UpdateCarByIdNotFound struct{}
-
-func (*UpdateCarByIdNotFound) updateCarByIdRes() {}

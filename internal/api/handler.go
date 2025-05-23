@@ -2,7 +2,6 @@ package api
 
 import (
 	"context"
-	"github.com/Deymos01/go-ogen-crud-example/internal"
 	"github.com/Deymos01/go-ogen-crud-example/internal/oas"
 	"sync"
 )
@@ -44,7 +43,10 @@ func (c *CarHandler) DeleteCarById(ctx context.Context, params oas.DeleteCarById
 	defer c.mu.Unlock()
 
 	if _, ok := c.data[params.ID]; !ok {
-		return &oas.DeleteCarByIdNotFound{}, &internal.NotFoundError{ID: params.ID}
+		return &oas.Error{
+			Code:    404,
+			Message: "Car not found",
+		}, nil
 	}
 	delete(c.data, params.ID)
 	return &oas.DeleteCarByIdNoContent{}, nil
@@ -56,7 +58,10 @@ func (c *CarHandler) GetCarById(ctx context.Context, params oas.GetCarByIdParams
 
 	car, ok := c.data[params.ID]
 	if !ok {
-		return &oas.GetCarByIdNotFound{}, &internal.NotFoundError{ID: params.ID}
+		return &oas.Error{
+			Code:    404,
+			Message: "Car not found",
+		}, nil
 	}
 	return &car, nil
 }
@@ -78,7 +83,10 @@ func (c *CarHandler) UpdateCarById(ctx context.Context, req *oas.Car, params oas
 
 	_, ok := c.data[params.ID]
 	if !ok {
-		return &oas.UpdateCarByIdNotFound{}, &internal.NotFoundError{ID: params.ID}
+		return &oas.Error{
+			Code:    404,
+			Message: "Car not found",
+		}, nil
 	}
 
 	car := oas.Car{
