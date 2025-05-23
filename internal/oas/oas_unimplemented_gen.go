@@ -54,6 +54,6 @@ func (UnimplementedHandler) ListCars(ctx context.Context) (r []Car, _ error) {
 // Modify an existing car's details using its ID.
 //
 // PUT /cars/{id}
-func (UnimplementedHandler) UpdateCarById(ctx context.Context, req *Car, params UpdateCarByIdParams) (r UpdateCarByIdRes, _ error) {
+func (UnimplementedHandler) UpdateCarById(ctx context.Context, req *NewCar, params UpdateCarByIdParams) (r UpdateCarByIdRes, _ error) {
 	return r, ht.ErrNotImplemented
 }

@@ -77,7 +77,7 @@ func (c *CarHandler) ListCars(ctx context.Context) ([]oas.Car, error) {
 	return cars, nil
 }
 
-func (c *CarHandler) UpdateCarById(ctx context.Context, req *oas.Car, params oas.UpdateCarByIdParams) (oas.UpdateCarByIdRes, error) {
+func (c *CarHandler) UpdateCarById(ctx context.Context, req *oas.NewCar, params oas.UpdateCarByIdParams) (oas.UpdateCarByIdRes, error) {
 	c.mu.Lock()
 	defer c.mu.Unlock()
 

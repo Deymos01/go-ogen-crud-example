@@ -26,7 +26,7 @@ func encodeAddCarRequest(
 }
 
 func encodeUpdateCarByIdRequest(
-	req *Car,
+	req *NewCar,
 	r *http.Request,
 ) error {
 	const contentType = "application/json"
