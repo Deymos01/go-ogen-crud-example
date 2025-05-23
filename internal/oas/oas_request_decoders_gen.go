@@ -78,7 +78,7 @@ func (s *Server) decodeAddCarRequest(r *http.Request) (
 }
 
 func (s *Server) decodeUpdateCarByIdRequest(r *http.Request) (
-	req *NewCar,
+	req *UpdateCar,
 	close func() error,
 	rerr error,
 ) {
@@ -117,7 +117,7 @@ func (s *Server) decodeUpdateCarByIdRequest(r *http.Request) (
 
 		d := jx.DecodeBytes(buf)
 
-		var request NewCar
+		var request UpdateCar
 		if err := func() error {
 			if err := request.Decode(d); err != nil {
 				return err

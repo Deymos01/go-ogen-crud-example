@@ -147,3 +147,143 @@ func (s *NewCar) SetYear(val int) {
 func (s *NewCar) SetColor(val string) {
 	s.Color = val
 }
+
+// NewOptInt returns new OptInt with value set to v.
+func NewOptInt(v int) OptInt {
+	return OptInt{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptInt is optional int.
+type OptInt struct {
+	Value int
+	Set   bool
+}
+
+// IsSet returns true if OptInt was set.
+func (o OptInt) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptInt) Reset() {
+	var v int
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptInt) SetTo(v int) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptInt) Get() (v int, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptInt) Or(d int) int {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
+// NewOptString returns new OptString with value set to v.
+func NewOptString(v string) OptString {
+	return OptString{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptString is optional string.
+type OptString struct {
+	Value string
+	Set   bool
+}
+
+// IsSet returns true if OptString was set.
+func (o OptString) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptString) Reset() {
+	var v string
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptString) SetTo(v string) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptString) Get() (v string, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptString) Or(d string) string {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
+// Ref: #/components/schemas/UpdateCar
+type UpdateCar struct {
+	Manufacturer OptString `json:"manufacturer"`
+	Model        OptString `json:"model"`
+	Year         OptInt    `json:"year"`
+	Color        OptString `json:"color"`
+}
+
+// GetManufacturer returns the value of Manufacturer.
+func (s *UpdateCar) GetManufacturer() OptString {
+	return s.Manufacturer
+}
+
+// GetModel returns the value of Model.
+func (s *UpdateCar) GetModel() OptString {
+	return s.Model
+}
+
+// GetYear returns the value of Year.
+func (s *UpdateCar) GetYear() OptInt {
+	return s.Year
+}
+
+// GetColor returns the value of Color.
+func (s *UpdateCar) GetColor() OptString {
+	return s.Color
+}
+
+// SetManufacturer sets the value of Manufacturer.
+func (s *UpdateCar) SetManufacturer(val OptString) {
+	s.Manufacturer = val
+}
+
+// SetModel sets the value of Model.
+func (s *UpdateCar) SetModel(val OptString) {
+	s.Model = val
+}
+
+// SetYear sets the value of Year.
+func (s *UpdateCar) SetYear(val OptInt) {
+	s.Year = val
+}
+
+// SetColor sets the value of Color.
+func (s *UpdateCar) SetColor(val OptString) {
+	s.Color = val
+}

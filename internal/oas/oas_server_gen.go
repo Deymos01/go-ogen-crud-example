@@ -37,7 +37,7 @@ type Handler interface {
 	// Modify an existing car's details using its ID.
 	//
 	// PUT /cars/{id}
-	UpdateCarById(ctx context.Context, req *NewCar, params UpdateCarByIdParams) (UpdateCarByIdRes, error)
+	UpdateCarById(ctx context.Context, req *UpdateCar, params UpdateCarByIdParams) (UpdateCarByIdRes, error)
 }
 
 // Server implements http server based on OpenAPI v3 specification and

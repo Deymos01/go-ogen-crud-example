@@ -57,7 +57,7 @@ type Invoker interface {
 	// Modify an existing car's details using its ID.
 	//
 	// PUT /cars/{id}
-	UpdateCarById(ctx context.Context, request *NewCar, params UpdateCarByIdParams) (UpdateCarByIdRes, error)
+	UpdateCarById(ctx context.Context, request *UpdateCar, params UpdateCarByIdParams) (UpdateCarByIdRes, error)
 }
 
 // Client implements OAS client.
@@ -435,12 +435,12 @@ func (c *Client) sendListCars(ctx context.Context) (res []Car, err error) {
 // Modify an existing car's details using its ID.
 //
 // PUT /cars/{id}
-func (c *Client) UpdateCarById(ctx context.Context, request *NewCar, params UpdateCarByIdParams) (UpdateCarByIdRes, error) {
+func (c *Client) UpdateCarById(ctx context.Context, request *UpdateCar, params UpdateCarByIdParams) (UpdateCarByIdRes, error) {
 	res, err := c.sendUpdateCarById(ctx, request, params)
 	return res, err
 }
 
-func (c *Client) sendUpdateCarById(ctx context.Context, request *NewCar, params UpdateCarByIdParams) (res UpdateCarByIdRes, err error) {
+func (c *Client) sendUpdateCarById(ctx context.Context, request *UpdateCar, params UpdateCarByIdParams) (res UpdateCarByIdRes, err error) {
 	otelAttrs := []attribute.KeyValue{
 		otelogen.OperationID("updateCarById"),
 		semconv.HTTPRequestMethodKey.String("PUT"),

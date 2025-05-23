@@ -681,7 +681,7 @@ func (s *Server) handleUpdateCarByIdRequest(args [1]string, argsEscaped bool, w 
 		}
 
 		type (
-			Request  = *NewCar
+			Request  = *UpdateCar
 			Params   = UpdateCarByIdParams
 			Response = UpdateCarByIdRes
 		)

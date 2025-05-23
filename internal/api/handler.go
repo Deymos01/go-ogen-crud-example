@@ -77,11 +77,11 @@ func (c *CarHandler) ListCars(ctx context.Context) ([]oas.Car, error) {
 	return cars, nil
 }
 
-func (c *CarHandler) UpdateCarById(ctx context.Context, req *oas.NewCar, params oas.UpdateCarByIdParams) (oas.UpdateCarByIdRes, error) {
+func (c *CarHandler) UpdateCarById(ctx context.Context, req *oas.UpdateCar, params oas.UpdateCarByIdParams) (oas.UpdateCarByIdRes, error) {
 	c.mu.Lock()
 	defer c.mu.Unlock()
 
-	_, ok := c.data[params.ID]
+	car, ok := c.data[params.ID]
 	if !ok {
 		return &oas.Error{
 			Code:    404,
@@ -89,13 +89,19 @@ func (c *CarHandler) UpdateCarById(ctx context.Context, req *oas.NewCar, params 
 		}, nil
 	}
 
-	car := oas.Car{
-		ID:           params.ID,
-		Manufacturer: req.Manufacturer,
-		Model:        req.Model,
-		Year:         req.Year,
-		Color:        req.Color,
+	if req.Model.IsSet() {
+		car.Model = req.Model.Value
 	}
+	if req.Year.IsSet() {
+		car.Year = req.Year.Value
+	}
+	if req.Manufacturer.IsSet() {
+		car.Manufacturer = req.Manufacturer.Value
+	}
+	if req.Color.IsSet() {
+		car.Color = req.Color.Value
+	}
+
 	c.data[params.ID] = car
 	return &car, nil
 }

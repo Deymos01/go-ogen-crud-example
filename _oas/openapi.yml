@@ -79,7 +79,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/NewCar'
+              $ref: '#/components/schemas/UpdateCar'
       responses:
         '200':
           description: Updated car.
@@ -147,6 +147,17 @@ components:
         - model
         - year
         - color
+      properties:
+        manufacturer:
+          type: string
+        model:
+          type: string
+        year:
+          type: integer
+        color:
+          type: string
+    UpdateCar:
+      type: object
       properties:
         manufacturer:
           type: string

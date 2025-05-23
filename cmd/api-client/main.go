@@ -30,14 +30,14 @@ func main() {
 	fmt.Printf("Created car: %+v\n", createdCar)
 
 	// Get car by ID
-	car, err := client.GetCarById(ctx, oas.GetCarByIdParams{ID: 1})
+	car, err := client.GetCarById(ctx, oas.GetCarByIdParams{ID: 0})
 	if err != nil {
 		log.Fatalf("failed to get car: %v", err)
 	}
 	fmt.Printf("Fetched car: %+v\n", car)
 
 	// Delete car by ID
-	delRes, err := client.DeleteCarById(ctx, oas.DeleteCarByIdParams{ID: 1})
+	delRes, err := client.DeleteCarById(ctx, oas.DeleteCarByIdParams{ID: 0})
 	if err != nil {
 		log.Fatalf("failed to delete car: %v", err)
 	}
