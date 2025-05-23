@@ -36,6 +36,17 @@ func main() {
 	}
 	fmt.Printf("Fetched car: %+v\n", car)
 
+	// Update car by ID
+	updCar := oas.UpdateCar{
+		Model: oas.OptString{Set: true, Value: "Model X"},
+		Color: oas.OptString{Set: true, Value: "Black"},
+	}
+	updRes, err := client.UpdateCarById(ctx, &updCar, oas.UpdateCarByIdParams{ID: 0})
+	if err != nil {
+		log.Fatalf("failed to update car: %v", err)
+	}
+	fmt.Printf("Updated car: %+v\n", updRes)
+
 	// Delete car by ID
 	delRes, err := client.DeleteCarById(ctx, oas.DeleteCarByIdParams{ID: 0})
 	if err != nil {
