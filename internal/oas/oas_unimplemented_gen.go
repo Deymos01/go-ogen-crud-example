@@ -57,3 +57,11 @@ func (UnimplementedHandler) ListCars(ctx context.Context) (r []Car, _ error) {
 func (UnimplementedHandler) UpdateCarById(ctx context.Context, req *UpdateCar, params UpdateCarByIdParams) (r UpdateCarByIdRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
+
+// NewError creates *ErrorStatusCode from error returned by handler.
+//
+// Used for common default response.
+func (UnimplementedHandler) NewError(ctx context.Context, err error) (r *ErrorStatusCode) {
+	r = new(ErrorStatusCode)
+	return r
+}

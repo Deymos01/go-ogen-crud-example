@@ -2,6 +2,14 @@
 
 package oas
 
+import (
+	"fmt"
+)
+
+func (s *ErrorStatusCode) Error() string {
+	return fmt.Sprintf("code %d: %+v", s.StatusCode, s.Response)
+}
+
 // Ref: #/components/schemas/Car
 type Car struct {
 	ID           int    `json:"id"`
@@ -99,6 +107,32 @@ func (s *Error) SetMessage(val string) {
 func (*Error) deleteCarByIdRes() {}
 func (*Error) getCarByIdRes()    {}
 func (*Error) updateCarByIdRes() {}
+
+// ErrorStatusCode wraps Error with StatusCode.
+type ErrorStatusCode struct {
+	StatusCode int
+	Response   Error
+}
+
+// GetStatusCode returns the value of StatusCode.
+func (s *ErrorStatusCode) GetStatusCode() int {
+	return s.StatusCode
+}
+
+// GetResponse returns the value of Response.
+func (s *ErrorStatusCode) GetResponse() Error {
+	return s.Response
+}
+
+// SetStatusCode sets the value of StatusCode.
+func (s *ErrorStatusCode) SetStatusCode(val int) {
+	s.StatusCode = val
+}
+
+// SetResponse sets the value of Response.
+func (s *ErrorStatusCode) SetResponse(val Error) {
+	s.Response = val
+}
 
 // Ref: #/components/schemas/NewCar
 type NewCar struct {

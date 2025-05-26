@@ -2,7 +2,10 @@ package api
 
 import (
 	"context"
+	"fmt"
 	"github.com/Deymos01/go-ogen-crud-example/internal/oas"
+	"github.com/go-faster/errors"
+	"net/http"
 	"sort"
 	"sync"
 )
@@ -19,6 +22,28 @@ func NewCarHandler() *CarHandler {
 	return &CarHandler{
 		data: make(map[int]oas.Car),
 		id:   0,
+	}
+}
+
+func (c *CarHandler) NewError(ctx context.Context, err error) *oas.ErrorStatusCode {
+	var notFoundError *CarNotFoundError
+	switch {
+	case errors.As(err, &notFoundError):
+		return &oas.ErrorStatusCode{
+			StatusCode: http.StatusNotFound,
+			Response: oas.Error{
+				Code:    http.StatusNotFound,
+				Message: fmt.Sprintf("Car with ID %d not found", notFoundError.ID),
+			},
+		}
+	default:
+		return &oas.ErrorStatusCode{
+			StatusCode: http.StatusInternalServerError,
+			Response: oas.Error{
+				Code:    http.StatusInternalServerError,
+				Message: "Internal server error",
+			},
+		}
 	}
 }
 
@@ -44,7 +69,7 @@ func (c *CarHandler) DeleteCarById(ctx context.Context, params oas.DeleteCarById
 	defer c.mu.Unlock()
 
 	if _, ok := c.data[params.ID]; !ok {
-		return ErrNotFound(params.ID), nil
+		return nil, &CarNotFoundError{ID: params.ID}
 	}
 	delete(c.data, params.ID)
 	return &oas.DeleteCarByIdNoContent{}, nil
@@ -56,7 +81,7 @@ func (c *CarHandler) GetCarById(ctx context.Context, params oas.GetCarByIdParams
 
 	car, ok := c.data[params.ID]
 	if !ok {
-		return ErrNotFound(params.ID), nil
+		return nil, &CarNotFoundError{ID: params.ID}
 	}
 	return &car, nil
 }
@@ -81,7 +106,7 @@ func (c *CarHandler) UpdateCarById(ctx context.Context, req *oas.UpdateCar, para
 
 	car, ok := c.data[params.ID]
 	if !ok {
-		return ErrNotFound(params.ID), nil
+		return nil, &CarNotFoundError{ID: params.ID}
 	}
 
 	if req.Model.IsSet() {
