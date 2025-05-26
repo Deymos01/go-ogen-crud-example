@@ -3,6 +3,7 @@ package api
 import (
 	"context"
 	"github.com/Deymos01/go-ogen-crud-example/internal/oas"
+	"sort"
 	"sync"
 )
 
@@ -68,6 +69,9 @@ func (c *CarHandler) ListCars(ctx context.Context) ([]oas.Car, error) {
 	for _, car := range c.data {
 		cars = append(cars, car)
 	}
+	sort.Slice(cars, func(i, j int) bool {
+		return cars[i].ID < cars[j].ID
+	})
 	return cars, nil
 }
 
